@@ -1,6 +1,7 @@
 version: '2'
 services:
   icinga2:
+    build: ./icinga2/
     image: jordan/icinga2
     restart: on-failure:5
     hostname: icinga2
