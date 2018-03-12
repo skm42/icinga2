@@ -1,0 +1,4 @@
+[submodule "graphite-docker"]
+	path = graphite-docker
+	url = git@github.com:skm42/graphite-docker.git
+	branch = configurable-timezone

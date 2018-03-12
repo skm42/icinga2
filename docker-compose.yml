@@ -19,6 +19,7 @@ services:
       #- ICINGAWEB2_ADMIN_PASS=icinga
       #- ICINGA2_USER_FULLNAME=Icinga2 Docker Monitoring Instance
       - DEFAULT_MYSQL_HOST=mysql
+      - APACHE_PHP_TIMEZONE=Etc/UTC
     volumes:
       - ./data/icinga/cache:/var/cache/icinga2
       - ./data/icinga/certs:/etc/apache2/ssl
@@ -43,9 +44,12 @@ services:
       - "443:443"
       - "5665:5665"
   graphite:
+    build: ./graphite-docker/
     image: bebehei/graphite:latest
     restart: on-failure:5
     hostname: graphite
+    environment:
+      - GRAPHITE_TIME_ZONE=Etc/UTC
     volumes:
       - ./data/graphite/lib:/var/lib/graphite
       - ./data/graphite/log/apache:/var/log/apache2

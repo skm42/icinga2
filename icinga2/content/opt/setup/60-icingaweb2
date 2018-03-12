@@ -36,7 +36,8 @@ icingacli module enable doc
 # Create MySQL user on localhost or test given connection
 if [ "${ICINGA2_IDO_MYSQL_HOST}" == "localhost" ]; then
 	mysql_root <<-END
-	  CREATE DATABASE IF NOT EXISTS ${ICINGAWEB2_MYSQL_DATA};
+	  CREATE DATABASE IF NOT EXISTS ${ICINGAWEB2_MYSQL_DATA}
+	    CHARACTER SET 'utf8';
 	  GRANT ALL
 	    ON ${ICINGAWEB2_MYSQL_DATA}.*
 	    TO '${ICINGAWEB2_MYSQL_USER}'@'localhost'
@@ -44,7 +45,8 @@ if [ "${ICINGA2_IDO_MYSQL_HOST}" == "localhost" ]; then
 	END
 elif [ -n "${MYSQL_ROOT_PASSWORD}" ]; then
 	mysql_root <<-END
-	  CREATE DATABASE IF NOT EXISTS ${ICINGAWEB2_MYSQL_DATA};
+	  CREATE DATABASE IF NOT EXISTS ${ICINGAWEB2_MYSQL_DATA}
+	    CHARACTER SET 'utf8';
 	  GRANT ALL
 	    ON ${ICINGAWEB2_MYSQL_DATA}.*
 	    TO '${ICINGAWEB2_MYSQL_USER}'@'%'
@@ -76,3 +78,5 @@ ini_set /etc/icingaweb2/roles.ini Administrators users "${ICINGAWEB2_ADMIN_USER}
 mysql_user <<-END
   INSERT IGNORE INTO icingaweb_user (name, active, password_hash) VALUES ('${ICINGAWEB2_ADMIN_USER}', 1, '${ICINGAWEB2_ADMIN_PASS_HASH}');
 END
+
+ini_set /etc/php/7.0/apache2/php.ini Date date.timezone   "${APACHE_PHP_TIMEZONE}"
